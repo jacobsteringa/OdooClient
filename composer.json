@@ -3,6 +3,7 @@
     "type": "library",
     "description": "A PHP Client for Odoo",
     "keywords": [],
+    "homepage": "https://github.com/jacobsteringa/OdooClient",
     "license": "MIT",
     "authors": [
         {
