@@ -1,0 +1,22 @@
+{
+    "name": "jacobsteringa/odoo-client",
+    "type": "library",
+    "description": "A PHP Client for Odoo",
+    "keywords": [],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jacob Steringa",
+            "email": "jacobsteringa@gmail.com"
+        }
+    ],
+    "require": {
+        "zendframework/zend-xmlrpc": "2.3.*",
+        "zendframework/zendxml": "1.0.*"
+    },
+    "autoload": {
+        "psr-0": { "Odoo\\": "" }
+    },
+    "target-dir": "Odoo",
+    "minimum-stability": "dev"
+}
