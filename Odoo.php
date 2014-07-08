@@ -65,6 +65,13 @@ class Odoo
 	protected $client;
 
 	/**
+	 * XmlRpc endpoint
+	 * 
+	 * @var string
+	 */
+	protected $path;
+
+	/**
 	 * Odoo constructor
 	 * 
 	 * @param string $host     The url
