@@ -16,8 +16,8 @@
         "zendframework/zendxml": "1.0.*"
     },
     "autoload": {
-        "psr-0": { "Odoo\\": "" }
+        "psr-0": { "Jsg\\": "" }
     },
-    "target-dir": "Odoo",
+    "target-dir": "Jsg/Odoo",
     "minimum-stability": "dev"
 }

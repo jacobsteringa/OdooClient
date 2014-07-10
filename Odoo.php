@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Odoo;
+namespace Jsg\Odoo;
 
 use Zend\XmlRpc\Client as XmlRpcClient;
 
