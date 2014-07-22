@@ -235,6 +235,69 @@ class Odoo
 	}
 
 	/**
+	 * Get report for model
+	 * 
+	 * @param string $model Model
+	 * @param array  $ids   Array of id's, for this method it should typically be an array with one id
+	 * @param string $type  Report type
+	 * 
+	 * @return mixed A report file
+	 */
+	public function getReport($model, $ids, $type = 'qweb-pdf')
+	{
+		$params = $this->buildParams(array(
+			$model,
+			$ids,
+			array(
+				'model' => $model,
+				'id' => $ids[0],
+				'report_type' => $type
+			)
+		));
+
+		$client = $this->getClient('report');
+
+		$reportId = $client->call('report', $params);
+
+		$state = false;
+
+		while (!$state) {
+			$report = $client->call(
+				'report_get',
+				$this->buildParams(array($reportId))
+			);
+
+			$state = $report['state'];
+
+			if (!$state) {
+				sleep(1);
+			}
+		}
+
+		return base64_decode($report['result']);
+	}
+
+	/**
+	 * Return last request
+	 * 
+	 * @return string
+	 */
+	public function getLastRequest()
+	{
+		return $this->getClient()->getLastRequest();
+	}
+
+	/**
+	 * Return last response
+	 * 
+	 * @return string
+	 */
+	public function getLastResponse()
+	{
+		return $this->getClient()->getLastResponse();
+	}
+
+	/**
 	 * Build parameters
 	 * 
 	 * @param array  $params Array of params to append to the basic params
@@ -254,13 +317,19 @@ class Odoo
 	 * Get XmlRpc Client
 	 *
 	 * This method returns an XmlRpc Client for the requested endpoint.
+	 * If no endpoint is specified or if a client for the requested endpoint is
+	 * already initialized, the last used client will be returned.
 	 * 
-	 * @param string $path The api endpoint
+	 * @param null|string $path The api endpoint
 	 * 
 	 * @return Zend\XmlRpc\Client
 	 */
-	protected function getClient($path)
+	protected function getClient($path = null)
 	{
+		if ($path === null) {
+			return $this->client;
+		}
+
 		if ($this->path === $path) {
 			return $this->client;
 		}
@@ -268,6 +337,10 @@ class Odoo
 		$this->path = $path;
 
 		$this->client = new XmlRpcClient($this->host . '/' . $path);
+		// The introspection done by the Zend XmlRpc client is probably specific
+		// to Zend XmlRpc servers. To prevent polution of the Odoo logs with errors
+		// resulting from this introspection calls we disable it.
+		$this->client->setSkipSystemLookup(true);
 
 		return $this->client;
 	}
