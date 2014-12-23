@@ -25,55 +25,56 @@ class Odoo
 {
 	/**
 	 * Host to connect to
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $host;
+    
 	/**
 	 * Unique identifier for current user
-	 * 
+	 *
 	 * @var integer
 	 */
 	protected $uid;
 
 	/**
 	 * Current users username
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $user;
 
 	/**
 	 * Current database
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $database;
 
 	/**
 	 * Password for current user
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $password;
 
 	/**
 	 * XmlRpc Client
-	 * 
-	 * @var Zend\XmlRpc\Client
+	 *
+	 * @var XmlRpcClient
 	 */
 	protected $client;
 
 	/**
 	 * XmlRpc endpoint
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $path;
 
 	/**
 	 * Odoo constructor
-	 * 
+	 *
 	 * @param string $host     The url
 	 * @param string $database The database to log into
 	 * @param string $user     The username
@@ -89,8 +90,8 @@ class Odoo
 
 	/**
 	 * Get version
-	 * 
-	 * @return array Oddo version
+	 *
+	 * @return array Odoo version
 	 */
 	public function version()
 	{
@@ -101,7 +102,7 @@ class Odoo
 
 	/**
 	 * Get timezone
-	 * 
+	 *
 	 * @return string Current timezone
 	 */
 	public function timezone()
@@ -117,12 +118,12 @@ class Odoo
 
 	/**
 	 * Search models
-	 * 
+	 *
 	 * @param string  $model  Model
 	 * @param array   $data   Array of criteria
 	 * @param integer $offset Offset
 	 * @param integer $limit  Max results
-	 * 
+	 *
 	 * @return array Array of model id's
 	 */
 	public function search($model, $data, $offset = 0, $limit = 100)
@@ -142,10 +143,10 @@ class Odoo
 
 	/**
 	 * Create model
-	 * 
+	 *
 	 * @param string $model Model
 	 * @param array  $data  Array of fields with data (format: ['field' => 'value'])
-	 * 
+	 *
 	 * @return integer Created model id
 	 */
 	public function create($model, $data)
@@ -163,11 +164,11 @@ class Odoo
 
 	/**
 	 * Read model(s)
-	 * 
+	 *
 	 * @param string $model  Model
 	 * @param array  $ids    Array of model id's
 	 * @param array  $fields Index array of fields to fetch, an empty array fetches all fields
-	 * 
+	 *
 	 * @return array An array of models
 	 */
 	public function read($model, $ids, $fields = array())
@@ -186,11 +187,11 @@ class Odoo
 
 	/**
 	 * Update model(s)
-	 * 
+	 *
 	 * @param string $model  Model
 	 * @param array  $ids    Array of model id's
 	 * @param array  $fields A associative array (format: ['field' => 'value'])
-	 * 
+	 *
 	 * @return array
 	 */
 	public function write($model, $ids, $fields)
@@ -209,11 +210,11 @@ class Odoo
 
 	/**
 	 * Unlink model(s)
-	 * 
+	 *
 	 * @param string $model Model
 	 * @param array  $ids   Array of model id's
-	 * 
-	 * @return boolean True is succesful
+	 *
+	 * @return boolean True is successful
 	 */
 	public function unlink($model, $ids)
 	{
@@ -228,11 +229,11 @@ class Odoo
 
 	/**
 	 * Get report for model
-	 * 
+	 *
 	 * @param string $model Model
 	 * @param array  $ids   Array of id's, for this method it should typically be an array with one id
 	 * @param string $type  Report type
-	 * 
+	 *
 	 * @return mixed A report file
 	 */
 	public function getReport($model, $ids, $type = 'qweb-pdf')
@@ -271,7 +272,7 @@ class Odoo
 
 	/**
 	 * Return last request
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getLastRequest()
@@ -281,7 +282,7 @@ class Odoo
 
 	/**
 	 * Return last response
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getLastResponse()
@@ -291,9 +292,9 @@ class Odoo
 
 	/**
 	 * Build parameters
-	 * 
+	 *
 	 * @param array  $params Array of params to append to the basic params
-	 * 
+	 *
 	 * @return array
 	 */
 	protected function buildParams(array $params)
@@ -311,10 +312,10 @@ class Odoo
 	 * This method returns an XmlRpc Client for the requested endpoint.
 	 * If no endpoint is specified or if a client for the requested endpoint is
 	 * already initialized, the last used client will be returned.
-	 * 
+	 *
 	 * @param null|string $path The api endpoint
-	 * 
-	 * @return Zend\XmlRpc\Client
+	 *
+	 * @return XmlRpcClient
 	 */
 	protected function getClient($path = null)
 	{
