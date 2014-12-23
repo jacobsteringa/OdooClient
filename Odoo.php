@@ -85,14 +85,6 @@ class Odoo
 		$this->database = $database;
 		$this->user = $user;
 		$this->password = $password;
-
-		$client = $this->getClient('common');
-
-		$this->uid = $client->call('login', array(
-			$this->database,
-			$user,
-			$this->password
-		));
 	}
 
 	/**
@@ -308,7 +300,7 @@ class Odoo
 	{
 		return array_merge(array(
 			$this->database,
-			$this->uid,
+			$this->uid(),
 			$this->password
 		), $params);
 	}
@@ -343,5 +335,25 @@ class Odoo
 		$this->client->setSkipSystemLookup(true);
 
 		return $this->client;
+	}
+
+	/**
+	 * Get uid
+	 *
+	 * @return int $uid
+	 */
+	protected function uid()
+	{
+		if ($this->uid === null) {
+			$client = $this->getClient('common');
+
+			$this->uid = $client->call('login', array(
+				$this->database,
+				$this->user,
+				$this->password
+			));
+		}
+
+		return $this->uid;
 	}
 }
