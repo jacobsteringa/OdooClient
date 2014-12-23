@@ -340,11 +340,11 @@ class Odoo
 	/**
 	 * Get uid
 	 *
-	 * @return int uid
+	 * @return int $uid
 	 */
 	protected function uid()
 	{
-		if ($this->uid == null) {
+		if ($this->uid === null) {
 			$client = $this->getClient('common');
 
 			$this->uid = $client->call('login', array(
