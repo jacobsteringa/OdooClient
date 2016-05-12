@@ -329,7 +329,12 @@ class Odoo
 
 		$this->path = $path;
 
-		$this->client = new XmlRpcClient($this->host . '/' . $path);
+		$new_client = new \Zend\Http\Client(null, array(
+                      'adapter' => 'Zend\Http\Client\Adapter\Socket',
+                      'sslverifypeer' => false
+                  ));
+
+                $this->client = new XmlRpcClient($this->host . '/' . $path, $new_client);
 		// The introspection done by the Zend XmlRpc client is probably specific
 		// to Zend XmlRpc servers. To prevent polution of the Odoo logs with errors
 		// resulting from this introspection calls we disable it.
