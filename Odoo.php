@@ -331,7 +331,7 @@ class Odoo
 
 		$new_client = new \Zend\Http\Client(null, array(
                       'adapter' => 'Zend\Http\Client\Adapter\Socket',
-                      'sslverifypeer' => false
+                      'sslcapath' => '/etc/ssl/certs',
                   ));
 
                 $this->client = new XmlRpcClient($this->host . '/' . $path, $new_client);
