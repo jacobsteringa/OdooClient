@@ -1,5 +1,5 @@
 {
-    "name": "coreation/odoo-client",
+    "name": "jacobsteringa/odoo-client",
     "type": "library",
     "description": "A PHP Client for Odoo",
     "keywords": [],
