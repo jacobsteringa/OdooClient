@@ -301,6 +301,16 @@ class Odoo
 	}
 
 	/**
+	 * Set custom http client
+	 *
+	 * @param HttpClient $httpClient
+	 */
+	public function setHttpClient(HttpClient $httpClient)
+	{
+		$this->httpClient = $httpClient;
+	}
+
+	/**
 	 * Build parameters
 	 *
 	 * @param array  $params Array of params to append to the basic params
