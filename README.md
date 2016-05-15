@@ -1,6 +1,6 @@
 # OdooClient
 
-OdooClient is an Odoo client for PHP. It is inspired on [OpenERP API][1] from simbigo and uses a more or less similar API. Instead of an own XmlRpc client it depends on the XmlRpc and Xml libraries from ZF.
+OdooClient is an Odoo client for PHP. It is inspired on [OpenERP API][1] from simbigo and uses a more or less similar API. Instead of an own XML-RPC client it depends on the XML-RPC and XML libraries from ZF.
 
 ## Supported versions
 
@@ -26,6 +26,24 @@ $client = new Odoo($url, $database, $user, $password);
 ```
 
 For the client to work you have to include the `/xmlrpc/2` part of the url.
+
+When you need to tweak the HTTP client used by the XML-RPC client, you can inject a custom HTTP client via the constructor or the `Odoo::setHttpClient` method.
+
+```php
+use Jsg\Odoo\Odoo;
+use Zend\Http\Client as HttpClient;
+
+$httpClient = new HttpClient(null, [
+    'sslverifypeer' => false,
+]);
+
+// constructor argument
+$client = new Odoo($url, $database, $user, $password, $httpClient);
+
+// or setter
+$client = new Odoo($url, $database, $user, $password);
+$client->setHttpClient($httpClient);
+```
 
 ### xmlrpc/2/common endpoint
 
