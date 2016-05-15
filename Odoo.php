@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * (c) Jacob Steringa <jacobsteringa@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -9,6 +9,7 @@
 
 namespace Jsg\Odoo;
 
+use Zend\Http\Client as HttpClient;
 use Zend\XmlRpc\Client as XmlRpcClient;
 
 /**
@@ -73,21 +74,28 @@ class Odoo
 	protected $path;
 
 	/**
+	 * Optional custom http client to initialize the XmlRpcClient with
+	 *
+	 * @var HttpClient
+	 */
+	protected $httpClient;
+
+	/**
 	 * Odoo constructor
 	 *
-	 * @param string 		   $host        The url
-	 * @param string 		   $database    The database to log into
-	 * @param string 		   $user        The username
-	 * @param string 		   $password    Password of the user
-	 * @param Zend\Http\Client $http_client An optional custom http client to initialise the XmlRpcClient with
+	 * @param string     $host       The url
+	 * @param string     $database   The database to log into
+	 * @param string     $user       The username
+	 * @param string     $password   Password of the user
+	 * @param HttpClient $httpClient An optional custom http client to initialize the XmlRpcClient with
 	 */
-	public function __construct($host, $database, $user, $password, $http_client = null)
+	public function __construct($host, $database, $user, $password, HttpClient $httpClient = null)
 	{
 		$this->host = $host;
 		$this->database = $database;
 		$this->user = $user;
 		$this->password = $password;
-		$this->http_client = $http_client;
+		$this->httpClient = $httpClient;
 	}
 
 	/**
@@ -331,11 +339,7 @@ class Odoo
 
 		$this->path = $path;
 
-		if (!empty($this->http_client)) {
-			$this->client = new XmlRpcClient($this->host . '/' . $path, $this->http_client);
-		} else {
-			$this->client = new XmlRpcClient($this->host . '/' . $path);
-		}
+		$this->client = new XmlRpcClient($this->host . '/' . $path, $this->httpClient);
 
 		// The introspection done by the Zend XmlRpc client is probably specific
 		// to Zend XmlRpc servers. To prevent polution of the Odoo logs with errors
